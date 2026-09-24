@@ -30,7 +30,9 @@ jobs:
           brew upgrade --formula || true
           # Remove pinned cmake version (https://github.com/actions/runner-images/blob/macos-15-arm64/20250825.2246/images/macos/scripts/build/install-common-utils.sh#L19)
           brew uninstall --ignore-dependencies cmake || true
-          # brew install libtiff openssl@3
+          # brew install libtiff openssl@3 yasm <- removed
+          # brew install signalwire/homebrew-signalwire/libks2 <- replaced 9/24/26
+          # brew install signalwire/homebrew-signalwire/signalwire-c2 <- replaced 9/24/26
           brew install \
             autoconf \
             automake \
@@ -51,12 +53,11 @@ jobs:
             speex \
             speexdsp \
             sqlite \
-            yasm \
+            libks \
+            signalwire-client-c \
           && \
           brew list --pinned | awk '{system("brew unpin " $1)}' && \
           brew install --adopt \
-            signalwire/homebrew-signalwire/libks2 \
-            signalwire/homebrew-signalwire/signalwire-c2 \
             signalwire/homebrew-signalwire/spandsp \
           && \
           brew link --force --overwrite \
